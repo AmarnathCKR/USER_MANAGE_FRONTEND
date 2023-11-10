@@ -1,42 +1,52 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.body-wrapper {
+    background-image: url("https://down-yuantu.pngtree.com/back_our/bg/20201024/bg/70dd671d671ca_438818.jpg?e=1676277800&st=MjI2MjgwNjAwZjFjYWIzOTZmMGM3Zjk5ZDAwMDNlZWM&n=%E2%80%94Pngtree%E2%80%94futuristic+shape+abstract+background+chemistry_1250295.jpg");
+    width: 100%;
+    height: 650px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.form-wrapper {
+    width: 80%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-content-wrapper {
+    background-color: rgb(196, 193, 193);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 100px;
+    padding-bottom: 36px;
+    border-radius: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.joe {
+    display: none;
 }
 
-.card {
-  padding: 2em;
+.admin-wrapper {
+    background-image: url("https://wallpaperaccess.com/full/16677.jpg");
+    width: 100%;
+    height: 650px;
 }
 
-.read-the-docs {
-  color: #888;
+.admin-form-wrapper {
+    width: 80%;
+}
+
+.admin-content-wrapper {
+    background-color: rgb(2, 0, 7);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 100px;
+    padding-bottom: 36px;
+    border-radius: 20px;
+    opacity: 0.9;
+
+}
+
+.image-holder{
+    width: 30px;
+    height: 30px;
+}
+
+body {
+    background-color: rgb(102, 116, 238);
 }
