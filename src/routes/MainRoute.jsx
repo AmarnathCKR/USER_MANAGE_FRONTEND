@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { subscribeAdminToken, subscribeAllData, subscribeToken, subscribeUser } from "../store";
 import SignUp from "../pages/user/SignUp";
 import Login from "../pages/user/Login";
@@ -12,6 +12,7 @@ import MyFeed from "../pages/user/MyFeed";
 
 function MainRoute() {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
@@ -58,6 +59,10 @@ function MainRoute() {
         <Route
           path="/admin-home"
           element={admin ? <AdminDashboard /> : <Navigate to="/admin-login" />}
+        />
+        <Route
+          path="/*"
+          element={<div className="h-screen w-full pt-40 flex justify-center align-middle  item-center text-center">Page not found{" "} <span onClick={()=>navigate("/")} className="mx-2 cursor-pointer text-blue-900"> Click here </span> {" "}   to go back to homepage</div>}
         />
       </Routes>
     </>
