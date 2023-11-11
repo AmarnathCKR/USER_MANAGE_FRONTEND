@@ -1,88 +1,96 @@
-import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { subscribeAdminToken, subscribeAllData } from "../../store/index.js";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import Google from "../../helper/google.tsx"
-import AdminPageWrapper from "../../layouts/admin/AdminPageWrapper.jsx";
+import { subscribeAdminToken, subscribeToken } from "../../store/index";
+import Button from "../../components/UI/Button";
+import Input from "../../components/UI/Input";
+import { loginSchema } from "../../schema/userValidater";
+import { useFormik } from "formik";
+import { PostAnyApi } from "../../api/api";
 
 function AdminLogin() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [fileData, setData] = useState({
-    email: "",
-    password: "",
-  });
 
   const [error, setError] = useState("");
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...fileData, [input.name]: input.value });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const url = "http://localhost:3000/api/admin/auth";
-      const { data: res } = await axios.post(url, fileData);
-      localStorage.setItem("all-user", JSON.stringify(res.allUser));
-      dispatch(subscribeAllData(res.allUser));
-      localStorage.setItem("admin-token", res.data);
-      dispatch(subscribeAdminToken(res.data));
-      navigate("/admin-home");
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
-    }
-  };
-
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      PostAnyApi("admin/login", {
+        email: values.email,
+        password: values.password,
+      })
+        .then((res) => {
+          console.log(res.data.token);
+          localStorage.setItem("admin-token", res.data.token);
+          dispatch(subscribeAdminToken(res.data.token));
+        })
+        .catch((err) => {
+          setError(err.response.data.error);
+        });
+    },
+  });
+  const navigate = useNavigate();
   return (
-    <AdminPageWrapper>
-      <h1 className="text-white">Admin Sign In</h1>
-      <form onSubmit={handleFormSubmit}>
-        <div className="form-group d-flex m-4 align-items-center">
-          <i className="fa fa-user text-white"></i>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="email"
+    <>
+      <div className="flex flex-col h-screen text-white items-center align-middle justify-center">
+        <div className="bg-[#1E1E1E] p-16 mx-auto  z-10 w-[350px] md:w-[400px] flex flex-col justify-center rounded-lg items-center opacity-70">
+          <h1 className="text-white z-10 md:text-5xl text-3xl tracking-wide pb-8">
+            ADMIN LOG IN
+          </h1>
+          <Input
+            onChange={(event) => {
+              formik.handleChange(event);
+              setError("");
+            }}
+            required
+            placeholder="EMAIL ADDRESS"
             name="email"
-            onChange={handleChange}
-            value={fileData.email}
-            required="required"
+            class="mt-8 text-xs md:text-sm"
+            value={formik.values.email}
+            type="text"
           />
-        </div>
-        <div className="form-group d-flex m-4 align-items-center">
-          <i className="fa fa-lock text-white"></i>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Password"
+          {formik.touched.email && formik.errors.email && (
+            <div className="text-red-500">{formik.errors.email}</div>
+          )}
+          <Input
+            onChange={(event) => {
+              formik.handleChange(event);
+              setError("");
+            }}
+            required
+            placeholder="PASSWORD"
             name="password"
-            required="required"
-            onChange={handleChange}
-            value={fileData.password}
+            class="mt-2 text-xs md:text-sm"
+            value={formik.values.password}
+            type="password"
           />
+          {formik.touched.password && formik.errors.password && (
+            <div className="text-red-500">{formik.errors.password}</div>
+          )}
+
+         
+          <div className="text-center text-red-500 mb-5 tracking-wide font-semibold">
+            {error}
+          </div>
+
+          <Button
+            onClick={formik.handleSubmit}
+            class="w-full"
+            outline
+            color="transparent"
+          >
+            LOG IN
+          </Button>
+          
+          <p className="my-4 rounded p-2 cursor-pointer bg-black" onClick={()=>navigate("/login")}>User Login</p>
         </div>
-        <div className="form-group align-items-center m-4 d-flex justify-content-center">
-          {error && <div className="text-danger">{error}</div>}
-          <input
-            type="submit"
-            className="btn btn-dark btn-block btn-lg"
-            value="Login"
-          />
-        </div>
-      </form>
-      <GoogleOAuthProvider clientId="635264642318-284aift53keao63nan68r055p302hmjv.apps.googleusercontent.com">
-        <Google />
-      </GoogleOAuthProvider>
-    </AdminPageWrapper>
+      </div>
+    </>
   );
 }
 

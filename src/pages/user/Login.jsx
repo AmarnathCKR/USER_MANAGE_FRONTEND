@@ -97,6 +97,8 @@ function Login() {
               Signup now
             </button>
           </p>
+
+          <p className="my-4 rounded p-2 cursor-pointer bg-black" onClick={()=>navigate("/admin-login")}>Admin Login</p>
         </div>
       </div>
     </>

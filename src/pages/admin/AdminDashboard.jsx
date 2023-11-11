@@ -10,25 +10,38 @@ import {
 import axios from "axios";
 import EditUser from "../../components/admin/EditUser";
 import AddUser from "../../components/admin/AddUser";
+import { getAnyApi } from "../../api/api";
 function AdminDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [create, setCreate] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [userData, setUserData] = useState(null);
+const token = useSelector((state)=>state.adminToken);
 
-  const handleDelete = async (key) => {
-    const data = { key: key };
+  const handleDelete = async (key,arg) => {
+    
     window.confirm("Are you sure");
-    const url = "http://localhost:3000/api/admin/delete";
-    const { data: res } = await axios.post(url, data);
-    localStorage.setItem("all-user", JSON.stringify(res.data));
-    dispatch(subscribeAllData(res.data));
+    getAnyApi(`admin/block-user?userId=${key}&arg=${arg}`,token)
+    .then((res)=>{
+      setUserData(res.data.allUser);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
   };
+  useEffect(() => {
+    getAnyApi("admin/all",token)
+      .then((res) => {
+        setUserData(res.data.allUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  const userData = useSelector((state) => state.allData);
   let items;
-  const mappedItems = userData.map((data) => {
+  const mappedItems = userData?.map((data) => {
     items = {
       id: data._id,
       name: data.name,
@@ -38,32 +51,17 @@ function AdminDashboard() {
     return (
       <tr key={data._id}>
         <td>{data.name}</td>
-        <td>
-          {data.image ? (
-            <img className="image-holder" src={data.image} alt="imagxcvxve" />
-          ) : (
-            <p>No image</p>
-          )}
-        </td>
+
         <td>{data.email}</td>
+        
         <td>
           <button
             onClick={() => {
-              setEditValue(data._id);
+              handleDelete(data._id,data.status ? false : true);
             }}
             className="btn btn-dark"
           >
-            Edit
-          </button>
-        </td>
-        <td>
-          <button
-            onClick={() => {
-              handleDelete(data._id);
-            }}
-            className="btn btn-dark"
-          >
-            Delete
+            {data.status ? "Block" : "Unblock"}
           </button>
         </td>
       </tr>
@@ -80,50 +78,27 @@ function AdminDashboard() {
   const changeStat = () => {
     setCreate(false);
   };
-  const changeEditStat = () => {
-    setEdit(false);
-  };
-  const [users, setUsers] = useState("");
-  const setEditValue = (id) => {
-    userData.map((data) => {
-      if (data._id === id) {
-        setUsers(data);
-        return data;
-      }
-    });
-
-    setEdit(true);
-  };
-
+  
   return (
-    <div className="container-fluid text-center text-white">
+    <div className="bg-black text-center text-white">
       <p className="h1 py-3">Admin Dashboard</p>
-      <div className="row">
-        {edit ? <EditUser onSubmit={changeEditStat} items={users} /> : <br />}
-        {create ? (
-          <AddUser onSubmit={changeStat} />
-        ) : (
-          <button
-            className="btn btn-success my-2"
-            onClick={() => {
-              setCreate(true);
-            }}
-          >
-            Create New User
-          </button>
-        )}
-        <button onClick={handleLogout} className="btn btn-danger my-2">
+      <div className="flex justify-center w-full">
+        
+        
+        <button
+          onClick={handleLogout}
+          className="btn border bg-red-900 text-black p-2 rounded mx-2 my-2"
+        >
           Logout
         </button>
       </div>
-      <div className="container bg-white">
-        <table className="table border table-striped table-bordered my-5">
+      <div className="flex flex-col items-center bg-black">
+        <table className="table border w-full table-bordered my-5">
           <thead>
             <th className="border">Name</th>
-            <th className="border">Image</th>
+
             <th className="border">E-mail</th>
-            <th className="border">Edit</th>
-            <th className="border">Delete</th>
+            <th className="border">Block</th>
           </thead>
           <tbody>{mappedItems}</tbody>
         </table>

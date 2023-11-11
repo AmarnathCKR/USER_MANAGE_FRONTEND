@@ -50,3 +50,79 @@
 body {
     background-color: rgb(102, 116, 238);
 }
+
+.modal-local {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .loader-local {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-local-content {
+    width: 500px;
+    width: 500px;
+    background-color: #fff;
+  }
+  
+  .modal-local-content-pay {
+    width: 600px;
+    width: 500px;
+    background-color: #fff;
+  }
+  
+  .modal-local-content-chat  {
+    
+    width: 720px;
+    background-color: #fff;
+  }
+  .modal-local-content-review  {
+    
+    width: 480px;
+    
+    background-color: #fff;
+  }
+  .modal-local-header,
+  .modal-local-footer {
+    padding: 10px;
+  }
+  
+  .modal-local-title {
+    margin: 0;
+  }
+  
+  .modal-local-body {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .modal-local-body-pay {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .local-wrapper {
+    display: grid;
+    /* height: 100vh; */
+  
+    place-items: center;
+  }

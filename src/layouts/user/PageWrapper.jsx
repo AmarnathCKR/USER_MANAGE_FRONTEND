@@ -47,19 +47,19 @@ function PageWrapper(props) {
           <div className="text-sm lg:flex-grow">
             <a
               onClick={()=>navigate("/")}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              className="block mt-4 cursor-pointer lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
               Home
             </a>
             <a
               onClick={()=>navigate("/profile")}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              className="block mt-4 cursor-pointer lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
               Profile
             </a>
             <a
               onClick={()=>navigate("/myfeed")}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+              className="block mt-4 cursor-pointer lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
             >
               My posts
             </a>
@@ -67,7 +67,7 @@ function PageWrapper(props) {
           <div>
             <a
               onClick={handleLogout}
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+              className="inline-block cursor-pointer text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
             >
               Logout
             </a>

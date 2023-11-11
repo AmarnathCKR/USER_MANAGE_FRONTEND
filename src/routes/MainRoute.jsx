@@ -8,6 +8,7 @@ import Home from "../pages/user/Home";
 import Profile from "../pages/user/Profile";
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import MyFeed from "../pages/user/MyFeed";
 
 function MainRoute() {
     const dispatch = useDispatch();
@@ -45,6 +46,10 @@ function MainRoute() {
         <Route
           path="/profile"
           element={user ? <Profile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/myfeed"
+          element={user ? <MyFeed /> : <Navigate to="/login" />}
         />
         <Route
           path="/admin-login"
