@@ -46,7 +46,7 @@ function Home() {
   return (
     <PageWrapper>
       <div className="flex justify-center">
-        <div className="flex flex-col md:w-7/12 justify-center">
+        <div className="flex flex-col md:w-7/12 w-full justify-center">
           <NewPost active={active} trigger={() => {setActive(!active);}} />
           <div className="bg-white mb-2 mt-4 p-3 w-full text-center text-2xl rounded">Recent Posts</div>
           <AllPost active={active}/>

@@ -29,7 +29,7 @@ function Post({ content , trigger }) {
     })
   }
   return (
-    <div className="text-center w-full my-4 bg-white rounded flex flex-col ">
+    <div className="text-center w-full my-4 break-words bg-white rounded flex flex-col ">
         <NewPost active={active} trigger={()=>{setActive(!active);trigger()}} link={`user/edit-post?postId=${content._id}`} message="Edit Post" postData={content}/>
       <div className="flex my-3 border-b-2 border-black  justify-between">
         <p className="px-4">{format(content.createdAt)}</p>

@@ -18,7 +18,7 @@ function PageWrapper(props) {
   };
   return (
     <>
-      <nav className="flex items-center justify-between flex-wrap bg-cyan-900 p-6">
+      <nav className="flex items-center w-full justify-between flex-wrap bg-cyan-900 p-6">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <span className="font-semibold text-xl tracking-tight">
             EXAMPLE.COM
@@ -42,7 +42,7 @@ function PageWrapper(props) {
         <div
           className={`w-full ${
             active ? "block" : "hidden"
-          } flex-grow lg:flex lg:items-center lg:w-auto`}
+          } flex-grow lg:flex lg:items-center `}
         >
           <div className="text-sm lg:flex-grow">
             <a
