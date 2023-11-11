@@ -6,7 +6,8 @@ import { signupSchema } from "../../schema/userValidater";
 import { PostAnyApi } from "../../api/api";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button";
-
+import Swal from "sweetalert2";
+const MySwal = Swal;
 function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -25,6 +26,11 @@ function SignUp() {
         password: values.password,
       })
         .then((res) => {
+          MySwal.fire({
+            title: "Success",
+            text: `You have successfully created an account`,
+            icon: "success",
+          });
           navigate("/login");
         })
         .catch((err) => setError(err?.response?.data?.message))
